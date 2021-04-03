@@ -1,0 +1,80 @@
+﻿@model WebApplication5.Models.CheckoutModel
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+
+    var cart = ViewBag.YourCart as WebApplication5.Concrete.Entities.Cart;
+    var payments = ViewBag.PaymentMethods as List<WebApplication5.Concrete.Entities.PaymentMethod>;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post, new { }))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.FullName)
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.FullName)
+                    </small>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Email)
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.Email)
+                    </small>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Phone)
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.Phone)
+                    </small>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.ShipTo)
+                    @Html.TextBoxFor(x => x.ShipTo, new { @class = "form-control" })
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.ShipTo)
+                    </small>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.PaymentMethod)
+
+                    @Html.DropDownListFor(x => x.PaymentMethod, 
+                            new SelectList(payments,"PaymentId","PaymentName"), 
+                            new { @class = "form-control" })
+
+                    <small class="form-text text-muted">
+                        @Html.ValidationMessageFor(x => x.PaymentMethod)
+                    </small>
+                </div>
+                <button type="submit">
+                    ĐẶT HÀNG
+                </button>
+            }
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    Số lượng: @cart.LineCollection.Count()
+                </a>
+                <a href="#" class="list-group-item">
+                    Tổng tiền: @cart.ComputerTotal()
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <!--Khai báo thư viện js dùng để validate form theo định nghĩa trong model-->
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+

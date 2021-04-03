@@ -1,0 +1,102 @@
+﻿@model WebApplication5.Concrete.Entities.Cart
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <h2>Đây là giỏ hàng của bạn</h2>
+            <table class="table table-bordered">
+                @foreach(var line in Model.LineCollection)
+                {
+                    <tr>
+                        <td>
+                            <img src="@line.Product.ProductImage" class="img-fluid"
+                                 style="max-height:100px;"/>
+                        </td>
+                        <td>
+                            <h3>@line.Product.ProductName</h3>
+
+                            @using (Html.BeginForm("RemoveFromCart", "Cart", FormMethod.Post, new { @class = "frmRemove" }))
+                            {
+                                <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
+                                <button class="btn btn-warning btnRemove" type="submit">
+                                    Xóa
+                                </button>
+                            }
+                        </td>
+                        <td>
+                            @line.Product.Price.ToString("c")
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("UpdateCart", "Cart", FormMethod.Post, new { }))
+                            {
+                                <input type="hidden" name="ProductId" value="@line.Product.ProductId"/>
+                                <input type="number" name="Quantity" value="@line.Quantity" />
+                                <button type="submit" class="btn btn-outline-success">
+                                    Cập nhật
+                                </button>
+                            }
+                        </td>
+                        <td>
+                            @((line.Quantity * line.Product.Price).ToString("c"))
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div>
+                @using(Html.BeginForm("ClearCart", "Cart", FormMethod.Post, new { }))
+                {
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return window.confirm('Bạn thực sự muốn xóa?');">
+                        Xóa giỏ hàng
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <table>
+                <tr>
+                    <td>Tổng tiền: </td>
+                    <td>
+                        @Model.ComputerTotal().ToString("c")
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a class="btn btn-primary"
+                           href="@Url.Action("Checkout","Cart")">
+                            Đặt hàng
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section js{
+    <script>
+        $(document).ready(function () {
+
+            $('.btnRemove').click(function (evt) {
+                //override các event mặc định của element
+                evt.preventDefault();
+
+                if (window.confirm('Ban thực sự muốn xóa?')) {
+                    //tìm kiếm form chứa button submit
+                    const frm = $(this).closest('.frmRemove');
+
+                    $(frm).submit();
+
+                } else {
+                    alert('Hành động được hủy');
+                }
+            })
+
+        });
+    </script>    
+}

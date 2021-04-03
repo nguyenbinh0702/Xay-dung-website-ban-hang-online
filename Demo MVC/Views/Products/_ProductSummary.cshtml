@@ -1,0 +1,28 @@
+﻿@model WebApplication5.Concrete.Entities.Product
+
+<div class="card">
+    <div class="card-body">
+        <div>
+            <img src="@Model.ProductImage"
+                 class="img-fluid product-image" />
+        </div>
+        <h3>
+            <a href="@Url.Action("ChiTiet","Products",new { productId = Model.ProductId })">
+                @Model.ProductName
+            </a>
+        </h3>
+        <div class="d-flex justify-content-between">
+            <span>@Model.Price $</span>
+
+            @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { @class = "frmMain" }))
+            {
+                @Html.Hidden("ProductId", Model.ProductId)
+                @Html.TextBox("Quantity", 1, new { type = "number", min = "1", max = "100" })
+
+                <button type="submit" class="btn btn-primary">
+                    Add to cart
+                </button>
+            }
+        </div>
+    </div>
+</div>

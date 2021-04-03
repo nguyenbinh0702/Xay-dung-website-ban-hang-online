@@ -1,0 +1,61 @@
+﻿@model WebApplication5.Models.ProductChiTietViewModel
+
+@{
+    ViewBag.Title = "ChiTiet";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <!--Ảnh sản phẩm-->
+        <div class="col-12 col-md-4">
+            <img src="@Model.Product.ProductImage"
+                 class="img-fluid"/>
+        </div>
+        <!--Thông tin sản phẩm-->
+        <div class="col-12 col-md-8">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <td>Tên</td>
+                    <td>@Model.Product.ProductName</td>
+                </tr>
+                <tr>
+                    <td>Giá</td>
+                    <td>@Model.Product.Price</td>
+                </tr>
+                <tr>
+                    <td>Tình trạng</td>
+                    <td>
+                        @if (Model.Product.Amount > 0)
+                        {
+                            <span>Còn hàng</span>
+                        }
+                        else
+                        {
+                            <span>Hết hàng</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Danh mục</td>
+                    <td>
+                        @Model.Product.CategoryId
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+            <div class="row">
+                @foreach (var product in Model.LinkingProduct)
+                {
+                <div class="col-12 col-md-4 mb-4">
+                    @Html.Partial("_ProductSummary", product)
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

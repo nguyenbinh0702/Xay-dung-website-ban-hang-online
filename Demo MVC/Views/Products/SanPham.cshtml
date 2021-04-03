@@ -1,0 +1,66 @@
+﻿@model WebApplication5.Models.ProductSanPhamViewModel
+
+@{
+    ViewBag.Title = "SanPham";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <!--Danh mục sản phẩm-->
+        <div class="col-12 col-md-3">
+            <div class="list-group">
+                @foreach (var category in Model.Categories)
+                {
+                    <a href="@Url.Action("SanPham","Products",new { cat = category.CategoryId })" class="list-group-item">
+                        @category.CategoryName
+                    </a>
+                }
+            </div>
+        </div>
+        <!--Các sản phẩm-->
+        <div class="col-12 col-md-9">
+            <div class="row">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-12 col-md-4 mb-4">
+                        @Html.Partial("_ProductSummary", product)
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @if (Model.PagingInfo.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("SanPham","Products",new { page = Model.PagingInfo.CurrentPage - 1, pageSize = Model.PagingInfo.ItemsPerPage, cat = Model.CurrentCategory })" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            }
+
+                            @for (int i = 1, n = Model.PagingInfo.TotalPages; i <= n; i++)
+                            {
+                                <li class="page-item @(i == Model.PagingInfo.CurrentPage ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("SanPham","Products",new { page = i, pageSize = Model.PagingInfo.ItemsPerPage , cat = Model.CurrentCategory})">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+
+                            @if (Model.PagingInfo.CurrentPage < Model.PagingInfo.TotalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("SanPham","Products",new { page = Model.PagingInfo.CurrentPage + 1, pageSize = Model.PagingInfo.ItemsPerPage, cat = Model.CurrentCategory })" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
