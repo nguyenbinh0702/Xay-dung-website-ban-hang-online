@@ -1,0 +1,18 @@
+.main {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main table thead {
+  background-color: #ffc93c;
+}
+
+.main table td {
+  vertical-align: middle;
+}
+
+input.largerCheckbox {
+  width: 15px;
+  height: 15px;
+}
+
+

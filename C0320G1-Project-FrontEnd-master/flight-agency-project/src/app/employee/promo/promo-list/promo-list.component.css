@@ -1,0 +1,79 @@
+.main-content {
+  /*padding: 50px;*/
+  padding-left: 50px;
+  padding-top: 100px;
+}
+
+/*LIST KHUYEN MAI*/
+/* TAB BAR */
+nav > .nav.nav-tabs{
+  border: none;
+  color:#fff;
+  background:#272e38;
+  border-radius:0;
+
+}
+
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+  padding: 18px 25px;
+  color:#fff;
+  background:#272e38;
+  border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+{
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #e74c3c ;
+}
+.tab-content{
+  background: #fdfdfd;
+  line-height: 25px;
+  border: 1px solid #ddd;
+  border-top:5px solid #195b92;
+  border-bottom:5px solid #195b92;
+  padding:30px 25px;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+  background: #195b92;
+  color:#fff;
+  border-radius:0;
+  transition:background 0.20s linear;
+}
+
+/*table in list*/
+.table thead {
+  text-align: center;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.table tbody td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px 5px 2px 0px;
+}
+
+label {
+  /* color: #e74c3c; */
+  font-weight: bold;
+}
+
+.price {
+  color: orangered;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 5px;
+  display: block;
+}

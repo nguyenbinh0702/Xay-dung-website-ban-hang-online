@@ -1,0 +1,270 @@
+
+  /*       container trang danh sách        */
+#container {
+  border: 1px black solid;
+  padding: 1px;
+  height: 550px;
+  margin-right: 45px;
+  background: -webkit-linear-gradient(top, whitesmoke 100%, #cce7f0 0%)
+}
+
+.container #content {
+  width: 92%;
+}
+
+/*            thanh tên bảng*               */
+h2 {
+  width: 100%;
+  text-align: center;
+  color: #4469B0;
+  font-family: 'Roboto', serif;
+  margin-bottom: 1px;
+}
+
+/*       thẻ tìm kiếm trống tại đây         */
+.Find {
+  float: left;
+  width: 16%;
+  margin-top: 2px;
+  background: #f0a252 none repeat scroll 0 0;
+}
+
+.Find > h3 span.letter {
+  font-size: 16px;
+  top: -webkit-calc(50% - 60px);
+  top: calc(50% - 60px);
+  text-shadow: 0 0 3px white;
+}
+
+.letter:nth-child(1) {
+  -webkit-animation: fade 1s infinite 400ms;
+  animation: fade 1s infinite 400ms;
+}
+
+.letter:nth-child(3) {
+  -webkit-animation: fade 1s infinite 400ms;
+  animation: fade 1s infinite 400ms;
+}
+
+.letter:nth-child(5) {
+  -webkit-animation: fade 1s infinite 400ms;
+  animation: fade 1s infinite 400ms;
+}
+
+@-webkit-keyframes fade {
+  50% {
+    opacity: 0.02
+  }
+}
+
+@keyframes fade {
+  50% {
+    opacity: 0.02;
+  }
+}
+
+span {
+  color: white;
+}
+
+#findTicket {
+  color: whitesmoke;
+  font-size: 16px;
+  text-decoration: underline
+}
+
+#findTicket:hover {
+  color: blue;
+}
+
+/*                   thanh select             */
+#div1 {
+  width: 8%;
+  text-align: right;
+  margin-top: 17px;
+  margin-left: 36%
+}
+
+.select_Find {
+  margin-left: 1%;
+  float: right;
+  width: 14%;
+  margin-top: 8px;
+  background: white none repeat scroll 0 0;
+  border: 2px solid #728497;
+}
+
+/*         ô tìm kiếm          */
+#inputSearch {
+  width: 77%;
+  float: left;
+  border: 2px solid #728497;
+  height: 40px;
+  margin-left: 7px
+}
+
+#buttonSearch {
+  height: 40px;
+  margin-left: 2px
+}
+
+/*            table                */
+.custab {
+  border: 1px solid black;
+  padding: 5px;
+  margin-top: 9px;
+  box-shadow: 3px 3px 2px #ccc;
+  transition: width 0.4s linear;
+}
+
+.custab:hover {
+  box-shadow: 3px 3px 0px transparent;
+  transition: 0.5s;
+}
+
+.select_hover {
+  border: 2px solid #095aab;
+  margin-right: 6px;
+  font-size: 16px;
+  color: black;
+  float: left;
+  height: 30px;
+  line-height: 25px;
+  padding: 0;
+  text-align: center;
+  top: 8px;
+  width: 60px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  background: -webkit-linear-gradient(top, #d6dfeb 0%, #aeb9c9 100%);
+}
+
+.select_hover:hover {
+  background: linear-gradient(to bottom, #99f98d 10%, #68d75b 90%);
+}
+
+th, td, tr {
+  border-right: 1px solid #728497;
+}
+
+thead {
+    background: #4469B0
+}
+
+#trHead {
+  font-size: large;
+  border-bottom: 1px solid black
+}
+
+
+/*          phân trang                */
+.pagination{
+  margin-left: 81%;
+}
+
+
+.action{
+  background-color: #007bff;
+  color: white;
+}
+
+
+/*           modal edit,delete         */
+ #modalDelete {
+  width: 33%;
+  height: 58%;
+  margin-top: 5%;
+  border: 1px solid #728497;
+  background-color: white;
+}
+
+  .text-danger{
+    font-size: 13px;
+    flex: 0;
+    margin-left: 11px;
+    margin-bottom: 0;
+  }
+
+  #modalEdit{
+    width: 33%;
+    height: 60%;
+    margin-top: 6%;
+    border: 1px solid #728497;
+    background-color: white;
+  }
+
+.heading {
+  text-align: center;
+  font-size: 30px;
+  color: #F96;
+  padding-top: 10px;
+}
+
+.delete {
+  text-align: center;
+  font-size: 30px;
+  color: red;
+  padding-top: 10px;
+}
+
+.col-xs-4{
+  margin-left: 9%;
+  width: 25%;
+}
+
+.col-xs-12{
+  margin-left: 13%;
+  margin-top: -2px;
+  width: 46%;
+}
+
+.row .input{
+  border: lightblue solid 1px;
+  background-color: white;
+  padding-left: 2px;
+  height: 30px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.row .noInput {
+  border: white;
+  background-color: white;
+  font-size: 16px;
+}
+
+.row .border-0{
+  font-size: 16px;
+}
+
+#note{
+  margin-left: 7% ;
+  color: red
+}
+
+.btn.btn-warning{
+  margin-left: 50%;
+  width: 47%;
+  text-align: center;
+
+}
+
+.btn.btn-warning:hover {
+  box-shadow: 2px 1px 2px 3px #99ccff;
+  background: #bc4b20;
+  color: #fff;
+  transition: background-color 0.5s ease-in-out, border-color 0.8s ease-in-out, box-shadow 1s ease-in-out;
+}
+
+.btn.btn-primary{
+  margin-left: 45%
+}
+
+.btn.btn-primary:hover {
+  box-shadow: 2px 1px 2px 3px #99ccff;
+  background: #16076a;
+  color: #fff;
+  transition: background-color 0.5s ease-in-out, border-color 0.8s ease-in-out, box-shadow 1s ease-in-out;
+}

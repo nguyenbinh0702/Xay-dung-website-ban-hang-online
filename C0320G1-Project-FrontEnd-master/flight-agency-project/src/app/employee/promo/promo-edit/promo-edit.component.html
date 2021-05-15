@@ -1,0 +1,182 @@
+<main>
+    <div class="main-content">
+        <div class="container-fluid">
+            <h2>Chỉnh sửa khuyến mãi</h2>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <form id="form-create" style="padding-left: 50px; padding-right: 50px" [formGroup]="promoForm"
+                        (ngSubmit)="updatePromo();">
+                        <div class="form-group">
+                            <label for="inputAddress">Tên khuyến mãi *</label>
+                            <input id="inputAddress" type="text" class="form-control form-control-sm"
+                                formControlName="namePromo" #focusCheck>
+                            <span *ngIf="promoForm.get('namePromo').hasError('required')" class="text-danger">Tên khuyến
+                                mãi không được để
+                                trống.</span>
+                            <!-- <span *ngIf="promoForm.get('promoName').hasError('whitespace')" class="text-danger">Tên
+                                khuyến mãi không được
+                                chỉ chứa mỗi khoảng trắng.</span> -->
+                            <span *ngIf="promoForm.get('namePromo').hasError('containSpecialCharacters')"
+                                class="text-danger">Tên khuyến mãi
+                                không được chứa ký tự đặc biệt.</span>
+                            <span *ngIf="promoForm.get('namePromo').hasError('maxlength')" class="text-danger">Tên
+                                khuyến mãi không được
+                                nhiều hơn 255 ký tự.</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Chặng bay *</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Điểm khởi hành *</span>
+                                    </div>
+                                    <select formControlName="departurePlace" id="inputState"
+                                        class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm">
+                                        <option disabled>Choose...</option>
+                                        <option *ngFor="let airport of airportList" value={{airport.id}}>{{airport.city}}</option>
+                                    </select>
+                                    <!-- <span *ngIf="promoForm.get('departurePlace').hasError('required')" class="text-danger">Điểm khởi hành không được để
+                                    trống.</span>
+                                <span *ngIf="promoForm.get('departurePlace').hasError('whitespace')" class="text-danger">Điểm khởi hành không được
+                                    chỉ chứa mỗi khoảng trắng.</span>
+                                <span *ngIf="promoForm.get('departurePlace').hasError('containSpecialCharacters')" class="text-danger">Điểm khởi hành
+                                    không được chứa ký tự đặc biệt.</span> -->
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputState">&nbsp;</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Điểm đến *</span>
+                                    </div>
+                                    <select formControlName="arrivalPlace" id="inputState"
+                                        class="form-control form-control-sm" aria-describedby="inputGroup-sizing-sm">
+                                        <option disabled>Choose...</option>
+                                        <option *ngFor="let airport of airportList" value={{airport.id}}>{{airport.city}}</option>
+                                    </select>
+                                    <!-- <span *ngIf="promoForm.get('arrivalPlace').hasError('required')" class="text-danger">Điểm đến không được để
+                                    trống.</span>
+                                <span *ngIf="promoForm.get('arrivalPlace').hasError('whitespace')" class="text-danger">Điểm đến không được
+                                    chỉ chứa mỗi khoảng trắng.</span>
+                                <span *ngIf="promoForm.get('arrivalPlace').hasError('containSpecialCharacters')" class="text-danger">Điểm đến
+                                    không được chứa ký tự đặc biệt.</span> -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">Hãng bay *</label>
+                                <select id="inputState" class="form-control form-control-sm"
+                                    aria-describedby="inputGroup-sizing-sm" formControlName="airline">
+                                    <option disabled>Choose...</option>
+                                    <option *ngFor="let airline of airlineList" value={{airline.id}}>{{airline.name}}
+                                    </option>
+                                </select>
+                                <span *ngIf="promoForm.get('airline').hasError('required')" class="text-danger">Hãng Bay
+                                    không được để
+                                    trống.</span>
+                                <!-- <span *ngIf="promoForm.get('airline').hasError('whitespace')" class="text-danger">Hãng
+                                    Bay không được
+                                    chỉ chứa mỗi khoảng trắng.</span> -->
+                                <span *ngIf="promoForm.get('airline').hasError('containSpecialCharacters')"
+                                    class="text-danger">Hãng Bay
+                                    không được chứa ký tự đặc biệt.</span>
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">Giảm giá (%)*</label>
+                                <input type="number" class="form-control form-control-sm" formControlName="discount">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">Thời gian khởi hành bay *</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Từ </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                        formControlName="flightDepartureDateStart">
+
+                                </div>
+                                <span *ngIf="promoForm.get('flightDepartureDateStart').hasError('required')"
+                                    class="text-danger">Thời gian khởi hành không được để
+                                    trống.</span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">&nbsp;</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Đến </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm"
+                                        formControlName="flightDepartureDateEnd">
+                                </div>
+                                <span *ngIf="promoForm.get('flightDepartureDateEnd').hasError('required')"
+                                    class="text-danger">Thời gian đến không được để
+                                    trống.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">Thời gian hiển thị khuyến mãi *</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Từ </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" formControlName="promoDateStart">
+                                </div>
+                                <span *ngIf="promoForm.get('promoDateStart').hasError('required')"
+                                    class="text-danger">Thời gian khuyến mãi không được để
+                                    trống.</span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">&nbsp;</label>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Đến </span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" aria-label="Small"
+                                        aria-describedby="inputGroup-sizing-sm" formControlName="promoDateEnd">
+                                </div>
+                                <span *ngIf="promoForm.get('promoDateEnd').hasError('required')" class="text-danger">Hạn
+                                    cuối khuyến mãi không được để
+                                    trống.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="message!=''" class="alert alert-success p-2" role="alert">
+                            {{message}}
+                        </div>
+                        <div *ngIf="errorMessage!=''" class="alert alert-danger p-2" role="alert">
+                            {{errorMessage}}
+                        </div>
+
+                        <div class="float-center">
+                            <button type="submit" class="btn btn-outline-success " style="margin-right: 30px;">Xác
+                                Nhận</button>
+                            <button type="button" class="btn btn-outline-danger"
+                                (click)="backToPromoList()">Hủy</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!--row-->
+            <hr>
+
+        </div>
+    </div>
+</main>

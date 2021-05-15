@@ -1,0 +1,32 @@
+.container-menu {
+  background: #4469B0 none repeat scroll 0px 0px;
+  border-bottom: 4px solid #d29328;
+  border-bottom-color: rgb(210, 147, 40);
+  position: relative;
+}
+
+.bg-color-custom {
+  background-color: #4469B0;
+}
+
+.btn-confirm-fn {
+  color: #fff;
+  background-color: #ffa801;
+  border-color: #ffa801;
+}
+
+.btn-sel-fn:hover {
+  color: #fff;
+  background-color: #00aeef;
+  border-color: #00aeef;
+}
+
+.btn-confirm-fn:hover {
+  color: #fff;
+  background-color: #ee9e02;
+  border-color: #ee9e02;
+}
+
+form {
+  border-color: rgba(0, 0, 0, 0.5) !important;
+}

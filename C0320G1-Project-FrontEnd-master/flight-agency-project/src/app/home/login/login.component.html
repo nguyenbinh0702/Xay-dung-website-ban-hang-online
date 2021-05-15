@@ -1,0 +1,76 @@
+<div class="container text-center">
+    <button type="button" class="close btn btn-light" (click)="onNoClick()">&times;</button>
+
+    <div class="row ">
+        <div class="col-md-12 justify-content-sm-center">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form">
+                <div class="content text-center">
+                  <p class="title">Đăng nhập</p>
+                    <div class="text-danger" role="alert">
+                        {{message}}
+                    </div>
+                    <div>
+                        <div id="input1" class="row text-center">
+                            <div class="col-md-2"><i class="icon icon-register-name icon-top"></i></div>
+                            <div class="col-md-10">
+                                <input class="input-top float-left" id="email-field" placeholder="Tên đăng nhập"
+                                    type="text" formControlName="email" /></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <small class="d-block text-danger"
+                            *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+                            <span
+                                *ngIf="loginForm.get('email').hasError('required')||loginForm.get('email').hasError('whitespace') ">Email
+                                không được để trống </span>
+
+                            <span
+                                *ngIf="loginForm.get('email').hasError('pattern')&& !loginForm.get('email').hasError('whitespace')">Email
+                                sai định dạng</span>
+                        </small>
+                    </div>
+
+                    <div>
+                        <div id="input2" class="row">
+                            <div class="col-md-2"><i class="icon icon-register-pass icon-top"></i></div>
+                            <div class="col-md-10" id="div-password">
+                                <input class="input-top float-left" id="password-field" formControlName="password"
+                                    placeholder="Mật khẩu" type="password" />
+                                <span toggle="#password-field" id="test"
+                                    class="fa fa-fw fa-eye field-icon toggle-password ">
+                                </span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <small class="d-block text-danger"
+                            *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                            <span *ngIf="loginForm.get('password').hasError('required')">Mật khẩu không được để
+                                trống</span>
+                        </small>
+                    </div>
+
+                    <label class=" col-xs-8 p-0 text-left float-left mt-3 mb-2 ">
+                        <input type="checkbox" (change)="remember($event)" name="RememberMe" />
+                        <span class="mr-3"> Ghi nhớ đăng nhập?</span>
+                        <a class="ml-5" href="/Account/ResetPassword">Quên mật khẩu?</a>
+                    </label>
+
+                    <div>
+                        <input type="submit" class="btn btn btn1 hvr-grow mb-2" value="Đăng nhập">
+                    </div>
+                    <p> Đăng nhập bằng tài khoản</p>
+                    <button type="button" class="fb btn btn hvr-grow" (click)="signInWithFB()">
+                        <i class="fab fa-facebook-f"></i> Đăng nhập với Facebook
+                    </button>
+                    <button type="button" class="google btn btn hvr-grow" (click)="signInWithGoogle()"><i
+                            class="fab fa-google g1">
+                        </i> Đăng nhập với Google+
+                    </button>
+                    <hr />
+                    <p>Bạn chưa có tài khoản?</p>
+                    <button type="button" class="btn btn-red dk hvr-grow">Đăng ký</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

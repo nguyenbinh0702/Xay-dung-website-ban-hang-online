@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <div class="col-md-8">
+      <form [formGroup]="createReportForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex justify-content-center">
+          <h1>Thống kê báo cáo</h1>
+        </div>
+        <hr>
+        <div class="form-group row">
+          <label for="type" class="col-md-3 col-form-label">Chọn kiểu báo cáo: </label>
+          <div class="col-md-3">
+            <select class="form-control" id="type" formControlName="chart">
+              <option value="" disabled>Chọn</option>
+              <option value="1">Circle</option>
+              <option value="2">Line</option>
+              <option value="3">Pie</option>
+              <option value="4">Bar</option>
+            </select>
+            <div role="alert"
+                 *ngIf="createReportForm.get('chart').invalid && createReportForm.get('chart').touched">
+              <small *ngIf="createReportForm.get('chart').hasError('required')" class="text-danger">
+                Vui lòng chọn kiểu báo cáo</small>
+            </div>
+          </div>
+          <label for="species" class="col-md-3 col-form-label">Chọn loại báo cáo: </label>
+          <div class="col-md-3">
+            <select class="form-control" id="species" formControlName="type">
+              <option value="" disabled>Chọn</option>
+              <option value="1">Doanh Thu</option>
+              <option value="2">Hãng bay</option>
+            </select>
+            <div role="alert"
+                 *ngIf="createReportForm.get('type').invalid && createReportForm.get('type').touched">
+              <small *ngIf="createReportForm.get('type').hasError('required')" class="text-danger">
+                Vui lòng chọn loại báo cáo</small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="form-check-input position-static col-md-2"></label>
+          <div class="input-group input-group col-md-5">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Từ </span>
+              <input type="date" class="form-control" aria-label="Small"
+                     aria-describedby="inputGroup-sizing-sm" formControlName="date1">
+            </div>
+            <div class="text-danger" role="alert"
+                 *ngIf="createReportForm.get('date1').invalid && createReportForm.get('date1').touched">
+              <small *ngIf="createReportForm.get('date1').hasError('required')">
+                Vui lòng chọn ngày</small>
+            </div>
+          </div>
+          <div class="input-group input-group col-md-5">
+            <label class="form-check-input position-static col-md-2"></label>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-mm">Đến</span>
+              <input type="date" class="form-control" aria-label="Small"
+                     aria-describedby="i-nputGroup-sizing-mm" formControlName="date2">
+            </div>
+            <div class="text-danger" role="alert"
+                 *ngIf="createReportForm.get('date2').invalid && createReportForm.get('date2').touched">
+              <small *ngIf="createReportForm.get('date2').hasError('required')">
+                Vui lòng chọn ngày</small>
+            </div>
+          </div>
+        </div> <!--row-->
+        <div class="form-group row">
+          <label class="col-md-2">So sánh với:</label>
+        </div>
+        <div class="form-group row">
+          <label class="form-check-input position-static col-md-2"></label>
+          <div class="input-group input-group col-md-5">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lm">Từ </span>
+              <input type="date" class="form-control" aria-label="Small"
+                     aria-describedby="inputGroup-sizing-lm" formControlName="date3">
+            </div>
+          </div>
+          <div class="input-group input-group col-md-5">
+            <label class="form-check-input position-static col-md-2"></label>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-em">Đến</span>
+              <input type="date" class="form-control" aria-label="Small"
+                     aria-describedby="inputGroup-sizing-em" formControlName="date4">
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+          <input type="submit" class="btn btn-primary btn-lg" value="  Xem  " id="myButton">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

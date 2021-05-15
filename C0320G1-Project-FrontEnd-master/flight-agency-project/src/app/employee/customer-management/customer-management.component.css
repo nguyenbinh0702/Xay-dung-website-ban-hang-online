@@ -1,0 +1,33 @@
+table{
+  padding: 0px;
+  width: 96%;
+  margin-left: 2%;
+}
+.btn-primary{
+  margin-left: 2%;
+}
+.page {
+  margin: 10px 2%;
+  float: right;
+}
+.container-fluid{
+  padding-bottom: 50px;
+}
+.form-top{
+  width: 96%;
+  margin-left: 2%;
+}
+.form-top form{
+  padding: 0;
+  margin: 0;
+}
+h3{
+  margin-top: 50px;
+}
+.text-danger{
+  margin-top: 50px;
+}
+
+
+
+

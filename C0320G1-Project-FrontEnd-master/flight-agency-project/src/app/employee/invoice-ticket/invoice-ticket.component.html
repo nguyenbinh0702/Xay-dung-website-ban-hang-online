@@ -1,0 +1,60 @@
+<div class="container mt-5 mb-3" id="container" style="width:450px">
+    <div class="d-flex justify-content-center">
+        <img style="height: 140px; width: 420px;" src="../../../assets/branches-image/logoC03.PNG">
+    </div>
+    <div class="border p-3 justify-content-center">
+        <h3 class="font-weight-normal text-uppercase">Mã đặt chỗ: <span class="font-weight-bold">{{transaction?.id}}</span></h3>
+        <p><span class="font-weight-bold">{{transaction?.flightSchedule?.departureAirport.city}}</span> đến <span class="font-weight-bold">{{transaction?.flightSchedule?.arrivalAirport.city}}</span></p>
+        <p class="pl-5">Khởi hành: <span class="font-weight-bold">{{transaction?.flightSchedule?.departureDateTime|date:'HH:mm dd/MM/yyyy'}}</span></p>
+        <p class="pl-5">Đến: <span class="font-weight-bold">{{transaction?.flightSchedule?.arrivalDateTime|date:'HH:mm dd/MM/yyyy'}}</span></p>
+        <p class="pl-5">Mã chuyến bay: <span class="font-weight-bold">{{transaction?.flightSchedule?.flightCode}}</span></p>
+        <p class="pl-5">Số lượng vé: <span class="font-weight-bold">{{transaction?.transactionDetails?.length}}</span></p>
+        <p class="pl-5">Giá: <span class="font-weight-bold">{{transaction?.flightSchedule?.price|number}} VND</span></p>
+        <hr>
+        <h5 class="text-uppercase font-weight-bold">Danh sách người đi</h5>
+        <div *ngFor="let person of transaction?.transactionDetails">
+            <p>Tên hành khách: {{person.passenger.fullName}}</p>
+        </div>
+        <hr>
+        <h5 class="text-uppercase font-weight-normal">tổng tiền: <span class="font-weight-bold">{{transaction.price|number}} VND</span></h5>
+        <p class="font-weight-bold" *ngIf="transaction?.status=='Chờ thanh toán'">Xin vui lòng thanh toán trước <span>{{transaction?.dueTime|date: 'HH:mm dd/MM/yyyy'}}</span></p>
+        <div class="mt-3 pl-5">
+            <p class="text-uppercase font-weight-bold "><u>điều kiện giá vé</u></p>
+            <p>Vé không hoàn, không hủy</p>
+            <p>Hành lý xách tay 7kg, nhỏ gọn</p>
+            <p>Liên hệ</p>
+            <p>Công ty: Phòng vé ABC</p>
+            <p>Địa chỉ: 01 Trần Phú, Đà Nẵng</p>
+            <p>Điện thoại: 0236.987.555</p>
+        </div>
+    </div>
+</div>
+<div class="row d-flex justify-content-between mb-3 " >
+    <div class="col-md-3 "></div>
+    <div class="col-md-2 ml-5 mr-5">
+        <input type="button" class="btn btn-warning ml-5 printPageButton" routerLink="/employee" value="Quay lại">
+    </div>
+    <div class="col-md-3 mr-3">
+        <input type="button" class="btn btn-primary printPageButton mr-2" id="printPageButton" (click)="sendEmail()" value="Gửi email">
+        <button class="btn btn-danger printPageButton" id="printPageButton" onclick="window.print()">In vé</button>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Gửi email thành công
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

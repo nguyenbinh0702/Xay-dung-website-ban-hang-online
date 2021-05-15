@@ -1,0 +1,257 @@
+<div class="container" id="container">
+  <div class="row ml-5" id="content">
+    <h2>Quản lý bán vé</h2>
+
+    <div class="Find">
+      <h3>
+        <span class="letter ml-2">Tìm</span>
+        <span class="letter"> </span>
+        <span class="letter ml-1">vé</span>
+        <span class="letter"> </span>
+        <span class="letter ml-1">trống</span>
+        <span class="letter ml-1"> </span>
+        <a id="findTicket" routerLink="/employee/findFlight">tại đây</a>
+      </h3>
+    </div>
+
+    <div id="div1">Tìm theo :</div>
+    <select class="select_Find" (change)="changeSearch($event)">
+      <option value="name">Tên khách hàng</option>
+      <option value="bookingCode">Mã đặt chỗ</option>
+      <option value="flight">Tuyến bay</option>
+    </select>
+
+
+    <div class="col-sm-3 d-flex mt-2">
+      <form class="filter-group" [formGroup]="formSearch">
+        <input id="inputSearch" type="text" name="search" formControlName="search" class="form-control"
+          placeholder="Tìm kiếm...">
+        <button id="buttonSearch" type="submit" value="Search" class="btn btn-primary" (click)="search()">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
+
+    <table class="table table-striped custab">
+      <thead class="table-hover">
+        <tr id="trHead">
+          <th>Tên</th>
+          <th>Mã đặt chỗ</th>
+          <th>Tuyến bay</th>
+          <th>Ngày đi</th>
+          <th>Tổng Tiền</th>
+          <th class="text-center">Thao tác</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ticket.name}}</td>
+        <td>{{ticket.bookingCode}}</td>
+        <td>{{ticket.departure}} - {{ticket.destination}}</td>
+        <td>{{ticket.departureTime | date:'HH:mm  dd-MM-yyyy'}}</td>
+        <td>{{mapTotalMoney.get(ticket.id)}}</td>
+        <td class="text-center">
+          <a href="#" class="select_hover" data-toggle="modal" data-target="#editModal" (click)="edit(ticket.id)">
+            Sửa</a>
+          <a href="#" class="select_hover" data-toggle="modal" data-target="#deleteModal" (click)="delete(ticket.id)"
+            style="border: 2px solid #b04848;color: black;"> Xóa</a>
+          <a href="#" class="select_hover" style="border: 2px solid #d9d414;color: black;"> In vé</a>
+        </td>
+      </tr>
+    </table>
+
+    <div class="clearfix mt-0 text-center">
+      <ul class="pagination ">
+        <li class="page-item"><a class="page-link mr-3" style="width: 100px;border-color: #007bff"
+            (click)="first()">Trang đầu</a></li>
+        <li class="page-item"><a class="page-link action mr-1" (click)="previous()">Lui</a></li>
+        <li class="page-item  "><a style="width: 60px" class="page-link">{{pageNumber + 1}} / {{totalPages}}</a></li>
+        <li class="page-item"><a class="page-link action ml-1" (click)="next()">Tới</a></li>
+        <li class="page-item"><a class="page-link ml-3" style="width: 103px;border-color: #007bff"
+            (click)="last()">Trang cuối</a></li>
+      </ul>
+    </div>
+
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <form class="container" id="modalEdit" [formGroup]="formEditTicket">
+
+      <header class="heading">Chỉnh sửa vé máy bay</header>
+
+      <div class="row ">
+
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-xs-4">
+              <label style="line-height: 2.5">Mã đặt chỗ :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control noInput mt-2" formControlName="bookingCode" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Tên hành khách :</label></div>
+            <div class="col-xs-12">
+              <input type="text" formControlName="name" class="form-control input">
+              <p *ngIf="formEditTicket.controls.name.errors?.required && formEditTicket.controls.name.touched"
+                class="text-danger">Vui nhập tên hành khách ! </p>
+              <p *ngIf="formEditTicket.controls.name.errors?.pattern && formEditTicket.controls.name.touched"
+                class="text-danger">Tên không đúng định dạng ! </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Chuyến bay :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control noInput" disabled [value]="flight">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Ngày :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control noInput" formControlName="departureTime" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Giá :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control noInput" id="total" disabled [value]="totalMoney">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Email thanh toán:</label></div>
+            <div class="col-xs-12">
+              <input type="text" formControlName="email" class="form-control input">
+              <p *ngIf="formEditTicket.controls.email.errors?.required && formEditTicket.controls.email.touched"
+                class="text-danger">Vui nhập email thanh toán ! </p>
+              <p *ngIf="formEditTicket.controls.email.errors?.pattern && formEditTicket.controls.email.touched"
+                class="text-danger">Email không đúng dịnh dạng ! </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Hãng bay:</label></div>
+            <div class="col-xs-12">
+              <input type="text" formControlName="airline" class="form-control noInput text-primary" disabled>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row d-flex mt-3">
+        <div class="col-sm-5">
+          <button class="btn btn-warning" data-dismiss="modal">Hủy
+          </button>
+        </div>
+
+        <div class="col-sm-5">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" [disabled]="formEditTicket.invalid"
+            (click)="submitEdit()"> Xác nhận
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteModal">
+    <form class="container" id="modalDelete" [formGroup]="formDeleteTicket">
+      <!---heading---->
+      <header class="heading delete">Bạn chắc rằng xóa vé này ?</header>
+      <!---Form starting---->
+      <div class="row ">
+
+        <div class="col-sm-12">
+          <div class="row mt-4">
+            <div class="col-xs-4">
+              <label>Mã đặt chỗ :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" formControlName="bookingCode" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Tên người đi :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" formControlName="name" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Tuyến bay : </label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" [value]="flight" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Ngày :</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" formControlName="departureTime" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Giá : </label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" [value]="totalMoney" disabled>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4">
+              <label>Email thanh toán:</label></div>
+            <div class="col-xs-12">
+              <input type="text" class="form-control border-0 input" formControlName="email" disabled>
+            </div>
+          </div>
+
+          <div id="note" class="row mt-2">
+            Chú ý : Xóa không thể hoàn tác lại !
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row d-flex mt-4">
+        <div class="col-sm-5">
+          <button class="btn btn-warning" data-dismiss="modal">Hủy
+          </button>
+        </div>
+
+        <div class="col-sm-5">
+          <button class="btn btn-primary" data-dismiss="modal" (click)="submitDelete(idDelete)"> Xác nhận
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  it('should format date', function () {
+    expect(element(by.binding("1288323623006 | date:'medium'")).getText()).toMatch(/Oct 2\d, 2010 \d{1,2}:\d{2}:\d{2} (AM|PM)/);
+    expect(element(by.binding("1288323623006 | date:'dd-MM-yyyy HH:mm:ss'")).getText()).toMatch(/2010-10-2\d \d{2}:\d{2}:\d{2} (-|\+)?\d{4}/);
+    expect(element(by.binding("'1288323623006' | date:'MM/dd/yyyy @ h:mma'")).getText()).toMatch(/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/);
+    expect(element(by.binding("'1288323623006' | date:\"MM/dd/yyyy 'at' h:mma\"")).getText()).toMatch(/10\/2\d\/2010 at \d{1,2}:\d{2}(AM|PM)/);
+  });
+
+</script>

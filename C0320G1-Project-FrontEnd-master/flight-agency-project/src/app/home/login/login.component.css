@@ -1,0 +1,192 @@
+
+@import 'https://res.flynow.vn/cdn/flynow/css/fn-icon.css';
+
+input{
+    border:  solid white !important;
+}
+
+.close{
+    margin-top: -24px;
+    margin-right: -36px;
+    border: 0px solid white !important;
+    box-shadow: none !important;
+    background: white;
+}
+
+.row{
+    margin-left: 0px;
+}
+input:focus{
+    outline:0 !important;
+    box-shadow: none !important;
+   }
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: 28px !important;
+    position: relative;
+    z-index: 2;
+}
+
+.icon-top{
+    margin-top: 28px !important;
+}
+
+.input-top{
+    margin-top: 21.5px;
+}
+
+#input1,#input2{
+    border-bottom: 1px solid !important;
+    margin-top: 5px;
+    margin-right: 4px ;
+    
+}
+
+.fb {
+    background-color: white ;
+    color: #1877f2 ;
+    margin: 5px ;
+    border: 2px solid #1877f2;
+    width: 80%;
+ 
+}
+
+.fb:hover {
+    background-color: #1877f2 !important;
+    color: white !important;
+
+}
+
+.google {
+    background-color: white ;
+    color: #dd4b39 ;
+    margin: 5px ;
+    border: 2px solid #dd4b39;
+    width: 80%;
+}
+
+.google:hover {
+    background-color: #dd4b39 !important;
+    color: white !important;
+
+}
+
+
+.btn:hover {
+    opacity: 1;
+}
+
+.fab{
+    margin-right: 5px;
+    color: #1877f2 ;
+
+}
+.google:hover>.g1{
+    color: white;
+}
+.fb:hover>.fab{
+    color: white;
+}
+
+
+
+.g1{
+    color: #dd4b39 ;
+}
+
+.modal-account .modal-body .col-xs-5 .content p{
+    margin: 10px !important;
+}
+
+hr{
+    margin:5px;
+}
+
+.valid {
+    background-color: white !important;
+}
+
+.lost-pass{
+    margin-left: 22%;
+}
+
+.title{
+    color: #4469B0 !important;
+    font-size: 26px;
+    font-family: Bebeboo-SemiBold;
+    text-align: center;
+    font-weight: bolder;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.btn1{
+    background-color: #4469B0;
+    color: white;
+    width: 80%;
+    border-radius:10px ;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.03);
+
+}
+
+
+.dk{
+    border-color: #4469B0 !important;
+    color:#4469B0 !important;
+    width: 80%;
+    border-radius:60px ;
+}
+
+.dn{
+    font-size: medium;
+}
+
+
+.fIfNjl {
+    cursor: pointer;
+    position: absolute;
+    top:11px;
+    left: 64.7%;
+    border-radius: 100%;
+    background-color: rgb(255, 255, 255);
+   
+    border: 0px solid white;
+   
+    text-align: center;
+}
+
+.close:hover{
+    cursor: pointer !important;
+    box-shadow: rgb(150, 150, 150) -2px 2px 2px !important;
+    border-radius: 100% !important;
+    background-color: rgb(255, 255, 255) !important;
+    border: 0px solid black !important;
+    width: 25px;
+    height: 25px;
+}
+
+.tikicon.icon-circle-close {
+    background-image: url(https://frontend.tikicdn.com/_desktop-next/static/img/sprite.png?v=100000000);
+    background-position: -304px -29px;
+    width: 25px;
+    height: 25px;
+}
+
+.tikicon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.col-md-2, .col-md-10{
+height: 54px;
+margin-top:10px
+}
+
+

@@ -1,0 +1,96 @@
+<div class="d-print-none">
+<div id="wrapper">
+    <div class="  detail d-flex justify-content-between mr-5 ml-5">
+        <div id="logo text-left">
+            <a href="#">
+                <img src="../../assets/branches-image/logoC03.PNG"
+                    style="width: 200px; height: 80px;margin-left: -50px">
+            </a>
+        </div>
+        <div id="hotline ">
+            <div class="hotline1">
+                Tổng Đài Đặt Vé
+            </div>
+            <hr>
+            <div class="hotline2">
+                09 05051904
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="navbar d-inline-flex ">
+    Flight agency
+    <div class="ml-5 mr-2 ">
+        <div class="float-right " role="navigation">
+            <a class="_3unRI btn-outline-primary" routerLink="/">Trang chủ</a>
+            <a class="_3unRI btn-outline-primary" routerLink="/flight/reservation">Thanh toán vé</a>
+            <a class="_3unRI btn-outline-primary " routerLink="/checkin">Check-in online</a>
+            <a class="_3unRI btn-outline-primary " routerLink="/promotion">Khuyến mại</a>
+            <div class="nav-item dropdown d-inline-flex">
+                <a type="button" class="dropdown-toggle _3unRI btn-outline-primary" placement="bottom"
+                    [ngbPopover]="popContent">
+                    Hỗ trợ
+                </a>
+                <ng-template #popContent>
+                    <button type="button" class="list-item text-center " routerLink="/send-feedback">Góp ý</button>
+                    <hr class="line">
+                    <button type="button" data-toggle="modal" data-target="#exampleModal"
+                        class="list-item text-center">Về chúng tôi</button>
+
+                </ng-template>
+            </div>
+            <!-- <a class="_3unRI btn-outline-primary" target="" href="/gioi-thieu-ve-chung-toi.html">Về chúng tôi</a> -->
+
+            <div *ngIf="!isLogged" class="nav-item dropdown d-inline-flex">
+                <a type="button" class="dropdown-toggle _3unRI btn-outline-primary" placement="bottom"
+                    [ngbPopover]="popContent">
+                    Đăng nhập/Đăng ký
+                </a>
+                <ng-template #popContent>
+                    <button type="button" class="btn btn-1 mb-3 mt-2" (click)="openDialog()">Đăng nhập</button>
+                    <button type="button" class="btn btn-1 mb-2">Đăng ký</button>
+                </ng-template>
+            </div>
+
+            <div *ngIf="isLogged" class="nav-item dropdown d-inline-flex ml-2">
+
+                <a type="button" class="dropdown-toggle _3unRI btn-outline-primary" placement="bottom"
+                    [ngbPopover]="popContent">
+                    <img src="{{userLogged?.photoURL}}" class="rounded-circle d-inline">
+                    {{userLogged?.name}}
+
+                </a>
+                <ng-template #popContent>
+                    <button type="button" class="list-item text-center " (click)="toProfile()">Xem hồ sơ</button>
+                    <hr class="line">
+                    <button type="button" data-toggle="modal" data-target="#exampleModal"
+                        class="list-item text-center">Đăng xuất</button>
+
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="false"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold text" id="exampleModalLabel">Đăng xuất</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center ">
+                    <span class="text"> Bạn có muốn đăng xuất không?</span>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning text-white" data-dismiss="modal">Không</button>
+                    <button type="button" (click)="logOut()" data-dismiss="modal" class="btn btn-2">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

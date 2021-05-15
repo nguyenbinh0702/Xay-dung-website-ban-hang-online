@@ -1,0 +1,390 @@
+<div class="container-fluid">
+  <div class="row ml-md-2 mt-md-3 mb-md-3">
+    <div class="col-md-8 content-promotion">
+      <div>
+        <div class="row bg-color-custom">
+          <div class="col-xs-2 border rounded-circle  m-md-2" style="padding: 0.7rem;">
+            <div class="text-center align-middle p-md-2">
+              <i class="fas fa-plane fa-2x" style="color: white;"></i>
+            </div>
+          </div>
+          <div class="row col-xs-10 mt-md-2 ml-md-3 ">
+            <h3 class="bg1" style=" height: 50px; width: 650px; margin-top: 20px">
+              {{listAirport[searchFormPromo.get('departureAirport').value]}} <img
+              src="https://d3dh07ymq581.cloudfront.net/images/flightdep.png"> {{listAirport[searchFormPromo.get('arrivalAirport').value]}}
+            </h3>
+          </div>
+        </div>
+        <div class="tab" id="dayWeek">
+          <button class="tablinks" (click)="dayOfWeek(1)" onclick="openTabs(event, 'dayOfWeek1')" id="set1"></button>
+          <button class="tablinks" (click)="dayOfWeek(2)" onclick="openTabs(event, 'dayOfWeek1')" id="set2"></button>
+          <button class="tablinks" (click)="dayOfWeek(3)" onclick="openTabs(event, 'dayOfWeek1')" id="set3"></button>
+          <button class="tablinks" (click)="dayOfWeek(4)" onclick="openTabs(event, 'dayOfWeek1')" id="set4"></button>
+          <button class="tablinks" (click)="dayOfWeek(5)" onclick="openTabs(event, 'dayOfWeek1')" id="set5"></button>
+          <button class="tablinks" (click)="dayOfWeek(6)" onclick="openTabs(event, 'dayOfWeek1')" id="set6"></button>
+          <button class="tablinks" (click)="dayOfWeek(7)" onclick="openTabs(event, 'dayOfWeek1')" id="set7"></button>
+        </div>
+
+        <div id="dayOfWeek1" class="tabcontent">
+          <table class="table-sm">
+            <thead class="no-border">
+            <tr>
+              <th>Hãng</th>
+              <th>Mã chuyến bay</th>
+              <th>Giờ khởi hành</th>
+              <th>Giờ đến nơi</th>
+              <th>Giá (VNĐ)</th>
+              <th>Khuyến Mãi</th>
+              <th>Chi tiết</th>
+              <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="selected" *ngFor="let promo of promoList | async ; index as i " id="select{{i+1}}">
+              <td><img class="img-icon" width="80" height="50" src="{{branch[promo.branch.id]}}"></td>
+              <td>{{promo.flightCode}}</td>
+              <td>
+                {{promo.departureDateTime.slice(11, promo.departureDateTime.length) + ' ' + promo.departureAirport.code}}
+                <br>
+                {{promo.departureAirport.city}}
+              </td>
+              <td>
+                {{promo.arrivalDateTime.slice(11, promo.arrivalDateTime.length) + ' ' + promo.arrivalAirport.code}}<br>
+                {{promo.arrivalAirport.city}}
+              </td>
+              <td>
+                <span style="text-decoration-line	: line-through">{{promo.price | currency:'VND': 'symbol'}}</span><br>
+                <span
+                  style="color: red">{{promo.price - (promo.price * promo.discount)| currency:'VND': 'symbol'}}</span>
+
+
+              </td>
+              <td class="sale">{{promo.discount * 100}}%</td>
+              <td>
+
+
+                <div class="btn-group">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Xem chi tiết
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" style=" top: -507px; left: -211px;">
+                    <div class="dropdown-item" type="button">
+                      <table style="width: 100% ">
+                        <tr style="background:  #4469B0 ; ">
+                          <td style="width: 30%">Chi tiết chuyến bay</td>
+                          <td style="width: 35%"></td>
+                          <td style="width: 35%"></td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <img class="img-icon" width="80" height="50" src="{{branch[promo.branch.id]}}">
+                          </td>
+                          <td>
+                            <p>Khởi Hành từ  : {{promo.departureAirport.city}} - {{promo.departureAirport.code}}</p>
+                            <p>Sân bay : {{promo.departureAirport.name}}</p>
+                            <p>Cất cánh : {{promo.departureDateTime.slice(11, promo.departureDateTime.length)}}</p>
+                            <p>Ngày : {{promo.departureDateTime.slice(0, 10)}}</p>
+                          </td>
+                          <td>
+                            <p>Đến : {{promo.arrivalAirport.city}} - {{promo.arrivalAirport.code}}</p>
+                            <p>Sân bay : {{promo.arrivalAirport.name}}</p>
+                            <p>Cất cánh : {{promo.arrivalDateTime.slice(11, promo.arrivalDateTime.length)}}</p>
+                            <p>Ngày : {{promo.arrivalDateTime.slice(0, 10)}}</p>
+                          </td>
+                        </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
+              <td>
+                <button  type="button" class="btn btn-warning">Chọn</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <img src="../../../assets/no_data_found.jpg" class="nodata" id="nodata" style="width: 100%">
+        </div>
+
+      </div>
+      <div>
+        <div id="dayWeek1" style="display: none">
+          <div class="row bg-color-custom">
+            <div class="col-xs-2 border rounded-circle  m-md-2" style="padding: 0.7rem;">
+              <div class="text-center align-middle p-md-2">
+                <i class="fas fa-plane fa-2x" style="color: white;"></i>
+              </div>
+            </div>
+            <div class="row col-xs-10 mt-md-2 ml-md-3 ">
+              <h3 class="bg1" style=" height: 50px; width: 650px; margin-top: 20px">
+                {{listAirport[searchFormPromo.get('arrivalAirport').value]}}
+                <img src="https://d3dh07ymq581.cloudfront.net/images/flightdep.png">
+                {{listAirport[searchFormPromo.get('departureAirport').value]}}
+              </h3>
+
+            </div>
+          </div>
+          <table class="table-sm">
+            <thead class="no-border">
+            <tr>
+              <th>Hãng</th>
+              <th>Mã chuyến bay</th>
+              <th>Giờ khởi hành</th>
+              <th>Giờ đến nơi</th>
+              <th>Giá (VNĐ)</th>
+              <th>Khuyến Mãi</th>
+              <th>Chi tiết</th>
+              <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let promo of promoList1 | async" >
+              <td><img class="img-icon" width="80" height="50" src="{{branch[promo.branch.id]}}"></td>
+              <td>{{promo.flightCode}}</td>
+              <td>
+                {{promo.departureDateTime.slice(11, promo.departureDateTime.length) + ' ' + promo.departureAirport.code}}
+                <br>
+                {{promo.departureAirport.city}}
+              </td>
+              <td>
+                {{promo.arrivalDateTime.slice(11, promo.arrivalDateTime.length) + ' ' + promo.arrivalAirport.code}}<br>
+                {{promo.arrivalAirport.city}}
+              </td>
+              <td>
+                <span style="text-decoration-line	: line-through">{{promo.price | currency:'VND': 'symbol'}}</span><br>
+                <span
+                  style="color: red">{{promo.price - (promo.price * promo.discount)| currency:'VND': 'symbol'}}</span>
+
+
+              </td>
+              <td class="sale">{{promo.discount * 100}}%</td>
+              <td>
+
+
+                <div class="btn-group">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Xem chi tiết
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" style=" top: -507px; left: -211px;">
+                    <div class="dropdown-item" type="button">
+                      <table style="width: 100% ">
+                        <tr style="background:  #4469B0 ; ">
+                          <td style="width: 30%">Chi tiết chuyến bay</td>
+                          <td style="width: 35%"></td>
+                          <td style="width: 35%"></td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <img class="img-icon" width="80" height="50" src="{{branch[promo.branch.id]}}">
+                          </td>
+                          <td>
+                            <p>Khởi Hành từ  : {{promo.departureAirport.city}} - {{promo.departureAirport.code}}</p>
+                            <p>Sân bay : {{promo.departureAirport.name}}</p>
+                            <p>Cất cánh : {{promo.departureDateTime.slice(11, promo.departureDateTime.length)}}</p>
+                            <p>Ngày : {{promo.departureDateTime.slice(0, 10)}}</p>
+                          </td>
+                          <td>
+                            <p>Đến : {{promo.arrivalAirport.city}} - {{promo.arrivalAirport.code}}</p>
+                            <p>Sân bay : {{promo.arrivalAirport.name}}</p>
+                            <p>Cất cánh : {{promo.arrivalDateTime.slice(11, promo.arrivalDateTime.length)}}</p>
+                            <p>Ngày : {{promo.arrivalDateTime.slice(0, 10)}}</p>
+                          </td>
+                        </tr>
+
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
+              <td>
+                <button type="button" class="btn btn-warning" (click)="selected(i) ">Chọn</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <img src="../../../assets/no_data_found.jpg" class="nodata" id="nodata1" style="width: 100%">
+
+        </div>
+      </div>
+
+      <!--      table Khứ hồi-->
+
+
+    </div>
+
+    <!--        //menu-->
+    <div class="col-md-4 menu-promotion">
+      <form class="menu ml-md-2" [formGroup]="searchFormPromo" (ngSubmit)="promoSearch()">
+        <legend>Sắp xếp</legend>
+        <div class="border border-white rounded p-md-2">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="search" value="option1" checked>
+            <label class="form-check-label">
+              Đề Xuất
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="search" value="option2">
+            <label class="form-check-label">
+              Giá (Thấp Đến Cao)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="search" value="option3">
+            <label class="form-check-label">
+              Thời gian khởi hành
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="search" value="option3">
+            <label class="form-check-label">
+              Hãng hàng không
+            </label>
+          </div>
+        </div>
+
+
+        <legend>Tìm chuyến bay</legend>
+        <div class="border border-white rounded p-md-2">
+
+          <div class="form-check form-check-inline" style="margin-bottom: 10px">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+                   onclick="khuhoi()" checked (click)="roundTrip()">
+            <label class="form-check-label" for="inlineRadio1">Khứ Hồi</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"
+                   onclick="motchieu()" (click)="oneWay()">
+            <label class="form-check-label" for="inlineRadio2">Một chiều</label>
+          </div>
+
+
+          <div class="input-group mb-3 input">
+            <div class="input-group-prepend">
+              <label class="input-group-text label" for="inputGroupSelect01">
+                <strong style="color: #4469B0">Điểm đi: </strong>
+              </label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" formControlName="departureAirport">
+              <option selected="">Vui lòng chọn điểm đến....</option>
+              <option *ngFor="let airport of airport | async" value="{{airport.id}}">{{airport.city}} ({{airport.code}})
+              </option>
+            </select>
+          </div>
+
+
+          <div class="input-group mb-3 input">
+            <div class="input-group-prepend">
+              <label class="input-group-text label" for="inputGroupSelect02">
+                <strong style="color: #4469B0">Điểm đến: </strong>
+              </label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect02" formControlName="arrivalAirport">
+              <option selected="">Vui lòng chọn điểm đến....</option>
+              <option *ngFor="let airport of airport | async" value="{{airport.id}}">{{airport.city}} ({{airport.code}}
+                )
+              </option>
+            </select>
+          </div>
+
+
+          <div class="input-group mb-3 input">
+            <div class="input-group-prepend">
+                                             <span class="input-group-text label" id="basic-addon1">
+                                                 <strong style="color: #4469B0">Ngày đi: </strong>
+                                             </span>
+            </div>
+            <input type="date" class="form-control" aria-label="Username"
+                   aria-describedby="basic-addon1" id="dateNow1" formControlName="departureDateTime">
+          </div>
+
+          <div id="hidden2">
+            <div class="input-group mb-3 input">
+              <div class="input-group-prepend">
+                                                    <span class="input-group-text label" id="basic-addon2">
+                                                        <strong style="color: #4469B0">Ngày về: </strong>
+                                                    </span>
+              </div>
+              <input type="date" class="form-control" aria-label="Username"
+                     aria-describedby="basic-addon2" id="dateNow2" formControlName="arrivalDateTime">
+            </div>
+          </div>
+
+          <table style="width: 100%">
+            <tr>
+              <TH width="33%">Em bé</TH>
+              <TH width="33%">Trẻ em</TH>
+              <TH width="33%">Người lớn</TH>
+            </tr>
+            <tr>
+              <td>
+                <!--               Em bé-->
+                <select class="form-control custom-select" formControlName="babies">
+                  <option [selected]="true">1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </td>
+              <td>
+                <!--                trẻ em-->
+                <select class="form-control custom-select" formControlName="children">
+                  <option selected disabled>Chọn</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </td>
+              <td>
+                <!--                người lớn-->
+                <select class="form-control custom-select" formControlName="adults">
+                  <option selected disabled>Chọn</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+        <input type="submit" class="form-control btn btn-warning" style="margin-top :5px"
+               value="Tìm chuyến bay"/>
+      </form>
+
+      <div class="menu ml-md-2">
+        <div style="text-align: center">
+          <h5>Đăng ký nhận khuyến mãi</h5>
+        </div>
+
+
+        <div class="input-group mb-3 input">
+          <div class="input-group-prepend">
+                                                    <span class="input-group-text label">
+                                                        <strong style="color: #4469B0">Email: </strong>
+                                                    </span>
+          </div>
+          <input type="text" class="form-control" aria-label="Username"
+                 aria-describedby="basic-addon2">
+          <button class="btn btn-danger">Gửi</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

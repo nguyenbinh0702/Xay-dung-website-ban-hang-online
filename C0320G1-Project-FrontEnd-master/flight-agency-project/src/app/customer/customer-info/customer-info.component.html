@@ -1,0 +1,159 @@
+<div class=" main container d-flex justify-content-center">
+  <div class="container  w-50 mt-4 ml-4" >
+    <h3 class="mb-2 text-center">Thông tin cá nhân</h3>
+    <div *ngIf="errorMessage!=''" class="alert alert-warning p-2" role="alert">
+      {{errorMessage}}
+    </div>
+    <div id="message" *ngIf="message!=''" class="alert alert-success p-2" role="alert">
+      {{message}}
+    </div>
+    <div *ngFor="let mess of backendMessages">
+      <div class="alert alert-warning p-2" role="alert" >
+        {{mess}}
+      </div>
+    </div>
+    <form class="mt-5 mb-5" [formGroup]="infoForm">
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Họ và tên :</label>
+        <div class="col-md-9">
+          <input class="form-control" required type="text" formControlName="fullName" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Ngày sinh :</label>
+        <div class="col-md-9">
+          <input class="form-control pr-4" required type="date" formControlName="birthday" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Địa chỉ :</label>
+        <div class="col-md-9">
+          <input class="form-control" required type="text" formControlName="address" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Email :</label>
+        <div class="col-md-9">
+          <input class="form-control" required type="text" formControlName="email" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Giới tính :</label>
+        <div class="col-md-9">
+          <input class="form-control" formControlName="gender" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Xếp hạng :</label>
+        <div class="col-md-9">
+          <input class="form-control" formControlName="rank" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label">Điện thoại :</label>
+        <div class="col-md-9">
+          <input class="form-control" required type="text" formControlName="phoneNumber" readonly>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container w-50 mt-5 ml-5 ">
+    <div class="row avatar d-flex justify-content-center"><img src="{{avatarUrl}}" alt="avatar"></div>
+    <div class="d-flex justify-content-center d-flex-column mr-5 " style="margin-top: 150px" >
+      <input data-toggle="modal" data-target="#editPopup" type="submit" value="chỉnh sửa" class="btn btn-success ml-5 mb-2">
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editPopup" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="container  w-75 mt-2 " >
+        <h3 class="mb-2 text-center">Sửa thông tin </h3>
+        <div *ngIf="errorMessage!=''" class="alert alert-warning p-2" role="alert">
+          {{errorMessage}}
+        </div>
+        <form class="mt-5 mb-5" [formGroup]="updateForm" (ngSubmit)="updateCustomer()">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Họ và tên<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input class="form-control" required type="text" formControlName="fullName">
+              <div *ngIf="updateForm.get('fullName').invalid && updateForm.get('fullName').touched" class="alert alert-danger mt-2 mb-0">
+                <span *ngIf= "updateForm.get('fullName').hasError('required')" >Họ và tên không được để trống.</span>
+                <span *ngIf= "updateForm.get('fullName').hasError('containSpecialCharacters')" >Họ và tên không được chứa ký tự đặc biệt.</span>
+                <span *ngIf= "updateForm.get('fullName').hasError('maxlength')" >Họ và tên không được nhiều hơn 30 ký tự.</span>
+                <span *ngIf= "updateForm.get('fullName').hasError('minlength')" >Họ và tên không được nhỏ hơn 10 ký tự.</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Ngày sinh<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input class="form-control pr-4" required type="date" formControlName="birthday" >
+              <div *ngIf="updateForm.get('birthday').invalid && updateForm.get('birthday').touched" class="alert alert-danger mt-2 mb-0 ml-3">
+                <span *ngIf= "updateForm.get('birthday').hasError('required')" >Ngày sinh không được để trống.</span>
+                <span *ngIf= "updateForm.get('birthday').hasError('pattern')" >Ngày sinh không đúng định dạng.</span>
+                <span *ngIf= "updateForm.get('birthday').hasError('chooseDateGreaterThanCurrentDate')" >Ngày sinh không được lớn hơn ngày hiện tại.</span>
+                <span *ngIf= "updateForm.get('birthday').hasError('checkAge')" >Bạn không dủ 18 tuổi.</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Địa chỉ<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input class="form-control" required type="text" formControlName="address" >
+              <div *ngIf="updateForm.get('address').invalid && updateForm.get('address').touched" class="alert alert-danger mt-2 mb-0 ml-3">
+                <span *ngIf= "updateForm.get('address').hasError('required')" >Địa chỉ không được để trống.</span>
+                <span *ngIf= "updateForm.get('address').hasError('maxlength')" >Địa chỉ tối đa 40 kí tự.</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Điện thoại<span class="text-danger">*</span></label>
+            <div class="col-md-9">
+              <input class="form-control" required type="text" formControlName="phoneNumber" >
+              <div *ngIf="updateForm.get('phoneNumber').invalid && updateForm.get('phoneNumber').touched" class="alert alert-danger mt-2 mb-0 ml-3">
+                <span *ngIf= "updateForm.get('phoneNumber').hasError('required')" >Số Điện Thoại không được để trống.</span>
+                <span *ngIf= "updateForm.get('phoneNumber').hasError('format')" >Số Điện Thoại không đúng định dạng.</span>
+                <span *ngIf= "updateForm.get('phoneNumber').hasError('alphabel')" >Số điện thoại phải là số.</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row ">
+            <label class="col-md-3 col-form-label">Giới tính<span class="text-danger">*</span></label>
+            <div class="col-md-9 d-flex" >
+              <div class="form-check mr-2">
+                <input class="form-check-input" type="radio" id="exampleRadios1" value="Nam"  formControlName="gender" >
+                <label class="form-check-label" for="exampleRadios1">
+                  Nam
+                </label>
+              </div>
+              <div class="form-check mr-2">
+                <input class="form-check-input" type="radio" id="exampleRadios2"  value="Nữ"  formControlName="gender" >
+                <label class="form-check-label" for="exampleRadios2">
+                  Nữ
+                </label>
+              </div>
+              <div class="form-check mr-2">
+                <input class="form-check-input" type="radio" id="exampleRadios3" value="Khác"  formControlName="gender" >
+                <label class="form-check-label" for="exampleRadios3">
+                  Khác
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label">Ảnh đại diện</label>
+            <div class="col-md-9">
+              <input (change)="showPreview($event)" type="file" formControlName="avatarImageUrl" id="avatar" accept=".jpg , .png"  >
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-secondary mr-5" data-dismiss="modal">Hủy</button>
+            <input  type="submit" value="Lưu" class="btn btn-primary"  [disabled] = "updateForm.invalid" (click)="submit()">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

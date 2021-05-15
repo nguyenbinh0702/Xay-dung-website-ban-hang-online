@@ -1,0 +1,193 @@
+<div mat-dialog-content>
+
+   
+    <button class="btn btn-dark-outline" (click)="convertToPDF()">Generate PDF</button>
+
+    <div id="containerConvert" ng-ngModel="billDetail">
+        <div class="d-flex justify-content-center">
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/en/2/2f/Company_3_-_official_logo.png">
+            </div>
+        </div>
+        <div>
+            <h2 class="text-center text-primary mt-2 mb-3">C03 Airline</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-1"></div>
+
+            <table class="table col-10">
+                <tr class="row col-12">
+                    <td class="col-3" style="font-size:smaller">
+                        Đơn vị bán(Seller):
+                    </td>
+                    <td class="col-6" style="font-size:smaller"> 
+                        <u>Công ty TNHH DV Hàng Không C03</u>
+                    </td>
+                    <td class="col-3" style="font-size:smaller">
+                        Mẫu số (Form No:): 01GTKT3/004
+                    </td>
+                </tr>
+
+                <tr class="row col-12">
+                    <td class="col-3" style="font-size:smaller">
+                        Mã số thuế (Code):
+                    </td>
+                    <td class="col-6" style="font-size:smaller">
+                        37390500
+                    </td>
+                    <td class="col-3" style="font-size:smaller">
+                        Ký hiệu (Serial): MB/16T
+                    </td>
+                </tr>
+                <tr class="row col-12">
+                    <td class="col-3" style="font-size:smaller">
+                        Địa chỉ (Address):
+                    </td>
+                    <td class="col-6" style="font-size:smaller">
+                        295 Nguyễn Tất Thành, Thanh Bình, Hải Châu, Đà Nẵng 550000
+                    </td>
+                    <td class="col-3" style="font-size:smaller">
+                        Số HD (): 00234957123
+                    </td>
+                </tr>
+            </table>
+            <div class="col-1"></div>
+        </div>
+
+        <table class="table col-10">
+            <tr class="row col-12">
+                <td class="col-3" style="font-size:smaller">
+                    Đơn vị bán(Seller):
+                </td>
+                <td class="col-6" style="font-size:smaller">
+                    <u>Công ty TNHH DV Hàng Không C03</u>
+                </td>
+                <td class="col-3" style="font-size:smaller">
+                    Mẫu số (Form No:): 01GTKT3/004
+                </td>
+            </tr>
+
+            <tr class="row col-12">
+                <td class="col-3" style="font-size:smaller">
+                    Mã số thuế (Code):
+                </td>
+                <td class="col-6" style="font-size:smaller">
+                    37390500
+                </td>
+                <td class="col-3" style="font-size:smaller">
+                    Ký hiệu (Serial): MB/16T
+                </td>
+            </tr>
+            <tr class="row col-12">
+                <td class="col-3" style="font-size:smaller">
+                    Địa chỉ (Address):
+                </td>
+                <td class="col-6" style="font-size:smaller">
+                    295 Nguyễn Tất Thành, Thanh Bình, Hải Châu, Đà Nẵng 550000
+                </td>
+                <td class="col-3" style="font-size:smaller">
+                    Số HD (): 00234957123
+                </td>
+            </tr>
+        </table>
+        <div class="col-1"></div>
+    </div>
+
+
+
+
+        <div class="text-center">
+            <h4>HÓA ĐƠN TIỀN CƯỚC VẬN CHUYỂN VÀ PHÍ DỊCH VỤ</h4>
+        </div>
+        <div class="text-center">
+            <h4>(COMMERCIAL INVOICE)</h4>
+        </div>
+
+
+        <div class="text-center">
+            <div>
+                Ngày 01 Tháng 09 Năm 2020
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-1"></div>
+
+            <div class="col-10">
+
+                <div class="col-12">
+                    <b>Công ty TNHH DV Hàng Không C03</b>
+                    <b>(C03 AVITATION JOINT STOCK COMPANY)</b>
+                </div>
+
+
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>
+                                Tên khách hàng (Buyer):
+                            </td>
+                            <td>
+
+                                {{billDetail.transaction.account.fullName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mã chuyến bay ( flightCode ):</td>
+
+                            <td>{{billDetail.transaction.flightSchedule.flightCode}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Mã số thuế (Tax Code)
+                            </td>
+                            <td>
+                                {{billDetail.taxCode}}
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+
+                    <table class="table table-hover text-center">
+                        <tr class="table-primary">
+                            <td>STT <br>(No)</td>
+                            <td>Hành trình <br>(Route)</td>
+                            <td>
+                                Đơn giá <br>(Unitprice)
+
+                            </td>
+                            <td>Loại tiền <br> (Currency)</td>
+
+                            <td>Mã hóa đơn</td>
+
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <!-- <td>{{billDetail.dateCreated}}</td> -->
+                            <td>{{billDetail.transaction.flightSchedule.arrivalAirport.code}} - {{billDetail.transaction.flightSchedule.departureAirport.code}}</td>
+                            <td>{{billDetail.transaction.price}}</td>
+                            <td>VND</td>
+                            <td>{{billDetail.billCode}}</td>
+                        </tr>
+                    </table>
+                    <div class="text-center">
+                        <b>Tổng thanh toán:  {{billDetail.transaction.price}}  VND</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1"></div>
+
+
+    <div class="col-11 modal-footer">
+        <button type="button" class="btn btn-secondary" mat-dialog-close>Đóng</button>
+        <!-- <button type="button" class="btn btn-outline-info ">Chuyển đến tải hóa đơn</button> -->
+      </div>
+
+</div>

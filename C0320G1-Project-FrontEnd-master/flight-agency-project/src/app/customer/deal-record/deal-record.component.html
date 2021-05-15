@@ -1,0 +1,36 @@
+<!-- C-Ngan -->
+<h3>Lịch sử giao dịch</h3>
+<table class="table table-bordered table-striped text-center">
+    <thead class="bg-warning">
+    <tr>
+      <th scope="col">STT</th>
+        <th scope="col">Nơi đi</th>
+        <th scope="col">Nơi đến</th>
+        <th scope="col">Ngày đặt</th>
+        <th scope="col">Giá</th>
+        <th scope="col">Tình trạng</th>
+    </tr>
+    </thead>
+    <tbody class= "bg-white">
+    <tr *ngFor = "let deal of deals| async | paginate: { itemsPerPage: pageSize, currentPage: currentPage, totalItems: totalElements} index as i">
+        <td>{{i+1}}</td>
+        <td>{{deal.flightSchedule.departureAirport.city}}</td>
+        <td>{{deal.flightSchedule.arrivalAirport.city}}</td>
+        <td>{{deal.createdTime| date: 'dd/MM/yyyy'}}</td>
+        <td>{{deal.price| number}} đ</td>
+        <td>{{deal.status}}</td>
+    </tr>
+   
+    </tbody>
+</table>
+
+
+<div class="pagination">
+  <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+</div>
+
+
+
+
+
+

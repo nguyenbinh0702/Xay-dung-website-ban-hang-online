@@ -1,0 +1,432 @@
+
+    <div class="main-content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-9 ">
+                    <h2>Khuyến mãi&nbsp;&nbsp;&nbsp;</h2>
+                </div>
+                <div class="col-md-3">
+                    <div class="float-right">
+                        <a href="/employee/promotion/create" target="_blank" class="btn btn-sm btn-success"><i
+                                class="fas fa-plus-circle"></i> Thêm mới</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <form id="form-create" [formGroup]="createForm" (ngSubmit)="searchPromo()">
+                        <fieldset style="background-color: #bdc3c7;">
+                            <div style="margin: 20px 40px 20px 40px;">
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        <label for="namePromo">Chủ đề khuyến mãi</label>
+                                        <input formControlName="namePromo" [class.mark-success]="namePromo.valid"
+                                            type="text" class="form-control form-control-sm" id="namePromo">
+                                        <div *ngIf="namePromo.touched && namePromo.invalid">
+                                            <ng-container *ngFor="let error of errors.namePromoErrors">
+                                                <small *ngIf="namePromo.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md"></div>
+                                </div>
+                                <!--form-row-->
+
+                                <div class="form-row">
+                                    <div class="form-group col-md">
+                                        <label>Hãng hàng không</label>
+                                        <select formControlName="airline" [class.mark-success]="airline.valid"
+                                            class="form-control form-control-sm"
+                                            aria-describedby="inputGroup-sizing-sm">
+                                            <option disabled>Chọn...</option>
+                                            <option *ngFor="let airline of airlineList" value={{airline.id}}>
+                                                {{airline.name}}</option>
+                                        </select>
+                                        <div *ngIf="airline.touched && namePromo.invalid">
+                                            <ng-container *ngFor="let error of errors.airlineErrors">
+                                                <small *ngIf="airline.hasError(error.code)" class="d-block text-danger"
+                                                    role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md">
+                                        <label for="discount">Giảm giá (%)</label>
+                                        <input formControlName="discount" [class.mark-success]="discount.valid"
+                                            type="number" class="form-control form-control-sm" id="discount">
+                                        <div *ngIf="discount.touched && discount.invalid">
+                                            <ng-container *ngFor="let error of errors.discountErrors">
+                                                <small *ngIf="discount.hasError(error.code)" class="d-block text-danger"
+                                                    role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md" formGroupName="place">
+                                        <label for="departurePlace">Chặng bay</label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="departurePlace">Điểm đi</span>
+                                            </div>
+                                            <select formControlName="departurePlace"
+                                                class="form-control form-control-sm"
+                                                aria-describedby="inputGroup-sizing-sm">
+                                                <option disabled>Chọn...</option>
+                                                <option *ngFor="let airport of airportList" value={{airport.id}}>
+                                                    {{airport.city}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="departurePlace.touched && departurePlace.invalid">
+                                            <ng-container *ngFor="let error of errors.departurePlaceErrors">
+                                                <small *ngIf="departurePlace.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md" formGroupName="place">
+                                        <label for="arrivalPlace">&nbsp;</label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="arrivalPlace">Điểm đến</span>
+                                            </div>
+                                            <select formControlName="arrivalPlace" class="form-control form-control-sm"
+                                                aria-describedby="inputGroup-sizing-sm">
+                                                <option disabled>Chọn...</option>
+                                                <option *ngFor="let airport of airportList" value={{airport.id}}>
+                                                    {{airport.city}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="arrivalPlace.touched && arrivalPlace.invalid">
+                                            <ng-container *ngFor="let error of errors.arrivalPlaceErrors">
+                                                <small *ngIf="arrivalPlace.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                        <div *ngIf="place.touched && place.invalid">
+                                            <small class="d-block text-danger" role="alert"
+                                                *ngIf="place.errors?.duplicatedPlace">
+                                                Vui lòng chọn điểm đi và điểm đến khác nhau
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--form-row-->
+
+                                <div formGroupName="flightGroup" class="form-row">
+                                    <div class="form-group col-md">
+                                        <label for="flightDepartureDateStart">Khởi hành bay</label><br>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Từ </span>
+                                            </div>
+                                            <input id="flightDepartureDateStart"
+                                                formControlName="flightDepartureDateStart" type="date"
+                                                class="form-control" aria-label="Small"
+                                                aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                        <div
+                                            *ngIf="flightDepartureDateStart.touched && flightDepartureDateStart.invalid">
+                                            <ng-container *ngFor="let error of errors.flightDepartureDateStartErrors">
+                                                <small *ngIf="flightDepartureDateStart.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <!--col-md-->
+
+                                    <div class="form-group col-md">
+                                        <label for="flightDepartureDateEnd">&nbsp;</label><br>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Đến </span>
+                                            </div>
+                                            <input id="flightDepartureDateEnd" formControlName="flightDepartureDateEnd"
+                                                type="date" class="form-control" aria-label="Small"
+                                                aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                        <div *ngIf="flightDepartureDateEnd.touched && flightDepartureDateEnd.invalid">
+                                            <ng-container *ngFor="let error of errors.flightDepartureDateEndErrors">
+                                                <small *ngIf="flightDepartureDateEnd.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                        <div *ngIf="flightGroup.touched && flightGroup.invalid">
+                                            <small class="d-block text-danger" role="alert"
+                                                *ngIf="flightGroup.errors?.flightDateNotValid">
+                                                Ngày chuyến bay KM kết thúc không được nhỏ hơn ngày chuyến bay KM bắt
+                                                đầu
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <!--col-md-->
+
+                                    <div class="col-md">
+                                        <label for="promoDateStart">Hiển thị khuyến mãi</label>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="promoDateStart">Từ </span>
+                                            </div>
+                                            <input formControlName="promoDateStart" type="date" class="form-control"
+                                                aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                        <div *ngIf="promoDateStart.touched && promoDateStart.invalid">
+                                            <ng-container *ngFor="let error of errors.promoDateStartErrors">
+                                                <small *ngIf="promoDateStart.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <!--col-md-->
+
+                                    <div class="col-md">
+                                        <label for="promoDateEnd">&nbsp;</label><br>
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="promoDateEnd">Đến </span>
+                                            </div>
+                                            <input formControlName="promoDateEnd" type="date" class="form-control"
+                                                aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                        <div *ngIf="promoDateEnd.touched && promoDateEnd.invalid">
+                                            <ng-container *ngFor="let error of errors.promoDateEndErrors">
+                                                <small *ngIf="promoDateEnd.hasError(error.code)"
+                                                    class="d-block text-danger" role="alert">{{error.message}}</small>
+                                            </ng-container>
+                                        </div>
+                                        <div *ngIf="flightGroup.touched && flightGroup.invalid">
+                                            <small class="d-block text-danger" role="alert"
+                                                *ngIf="flightGroup.errors?.promoDateNotValid">
+                                                Ngày KM kết thúc không được lớn hơn ngày KM bắt đầu
+                                            </small>
+                                            <small class="d-block text-danger" role="alert"
+                                                *ngIf="flightGroup.errors?.promoEndLaterThanFlightEnd">
+                                                Ngày kết thúc KM không được lớn hơn ngày chuyến bay cuối cùng
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <!--col-md-->
+                                </div>
+                                <!--form-row-->
+
+                                <div class="float-center" style="margin-top: 20px">
+                                    <button type="submit" class="btn btn-outline-primary btn-rounded btn-sm my-0"><i
+                                            class="fas fa-search"></i> Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <br>
+                </div>
+            </div>
+            <!--TABLE-->
+
+            <div class="row">
+                <div class="col-md-12 ">
+                    <!--          <h6>Danh sách có {{promoList.length}} khuyến mãi</h6>-->
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a (click)="showPromoList('active')" class="nav-item nav-link active" href="#"
+                                data-toggle="tab" role="tab" aria-selected="true">Đang kích hoạt</a>
+                            <a (click)="showPromoList('not-active')" class="nav-item nav-link" href="#"
+                                data-toggle="tab" role="tab" aria-selected="false">Chưa kích hoạt</a>
+                            <a (click)="showPromoList('expired')" class="nav-item nav-link" href="#" data-toggle="tab"
+                                role="tab" aria-selected="false">Hết hiệu lực</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+
+                            <div class="table-responsive">
+                                <table class="table table-hover shopping-cart-wrap">
+                                    <thead class="text-muted" style="text-align: center; vertical-align: middle;">
+                                        <tr style="color: #e74c3c">
+                                            <th scope="col" width=5%>ID</th>
+                                            <th scope="col" width=20%>Chủ đề khuyến mãi</th>
+                                            <th scope="col" width=10%>Giảm giá</th>
+                                            <th scope="col" width=10%>Hãng hàng không</th>
+                                            <th scope="col" width=10%>Chặng bay</th>
+                                            <th scope="col" width=15%>Hiển thị khuyến mãi</th>
+                                            <th scope="col" width=15%>Ngày bay</th>
+                                        </tr>
+
+                                    <tbody>
+
+                                        <tr *ngFor="let promo of promoList">
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <dl class="param param-inline small">
+                                                        <dt>{{promo.id}}</dt>
+                                                    </dl>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+                                            <td>
+                                                <figure class="media">
+                                                    <div class="text-left">
+                                                        <h6>{{promo.namePromo}}</h6>
+                                                        <a title="" href="" class="btn-sm btn-outline-success"
+                                                            data-toggle="tooltip" [routerLink]="['promo-edit/' + promo.id]"><i class="far fa-edit"></i>
+                                                            Sửa</a>
+                                                        <a href="" class="btn-sm btn-outline-danger" data-toggle="modal"
+                                                            [attr.data-target]="'#delete'+ promo.id" (click)="selectDeletedPromo(promo)"> <i class="far fa-trash-alt"></i>
+                                                            Xóa</a>
+                                                        <div class="modal fade" [id]="'delete'+ promo.id" tabindex="-1" role="dialog"
+                                                            ari a-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title text-danger"
+                                                                            id="exampleModalLongTitle">Thông báo</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="alert alert-danger"><i
+                                                                                class="fas fa-exclamation-triangle"></i>
+                                                                            Bạn chắc
+                                                                            chắn
+                                                                            muốn
+                                                                            xóa giao dịch này?</div>
+                                                                        Tên khuyến mãi: {{promo.namePromo}} <br>
+                                                                        Giảm giá: {{promo.discount}} <br>
+                                                                        Hãng bay: {{promo.airline.name}} <br>
+                                                                        Thời gian khởi hành bay: Từ
+                                                                        {{promo.flightDepartureDateStart}} đến
+                                                                        {{promo.flightDepartureDateEnd}} <br>
+                                                                        Thời gian hiển thị khuyến mãi: Từ
+                                                                        {{promo.promoDateStart}} đến
+                                                                        {{promo.promoDateEnd}}
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-toggle="modal"
+                                                                            data-target="#alertSuccess"
+                                                                            data-dismiss="modal"
+                                                                            (click)="deletePromo(promo.id)">Có</button>
+                                                                        <button type="button" class="btn btn-danger"
+                                                                            data-dismiss="modal">Không</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- modal delete success -->
+                                                        <div class="modal fade" id="alertSuccess" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title text-danger"
+                                                                            id="exampleModalLongTitle">Thông Báo</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <!-- <div *ngIf="message!=''"
+                                                                            class="alert alert-success p-2"
+                                                                            role="alert"><i
+                                                                                class="fas fa-clipboard-check"></i>
+                                                                            {{message}}
+                                                                        </div>
+                                                                        <div *ngIf="errorMessage!=''"
+                                                                            class="alert alert-danger p-2" role="alert">
+                                                                            <i class="fas fa-clipboard-check"></i>
+                                                                            {{errorMessage}}
+                                                                        </div> -->
+                                                                        <div class="alert alert-success p-2">
+                                                                            <i class="fas fa-clipboard-check"></i> Xóa thành công  
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal" (click)="reloadPage()">Đóng</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </figure>
+                                            </td>
+
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <var class="price">{{promo.discount*100}} %</var>
+                                                    <small class="text-muted">/vé</small>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <dl class="param param-inline small">
+                                                        <dt>{{promo.airline.name}}</dt>
+                                                    </dl>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <dl class="param param-inline small">
+                                                        <dd>{{promo.departurePlace.city}} - {{promo.arrivalPlace.city}}
+                                                        </dd>
+                                                        <small class="text-muted">{{promo.departurePlace.code}} -
+                                                            {{promo.arrivalPlace.code}}</small>
+                                                    </dl>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <dl class="param param-inline small">
+                                                        <dd>{{promo.promoDateStart | date: 'dd/MM/yyyy'}} -
+                                                            {{promo.promoDateEnd | date: 'dd/MM/yyyy'}}</dd>
+                                                    </dl>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+
+                                            <td>
+                                                <div class="price-wrap">
+                                                    <dl class="param param-inline small">
+                                                        <dd>{{promo.flightDepartureDateStart | date: 'dd/MM/yyyy'}} -
+                                                            {{promo.flightDepartureDateEnd | date: 'dd/MM/yyyy'}}</dd>
+                                                    </dl>
+                                                </div> <!-- price-wrap .// -->
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item">
+                                            <p (click)="goToPage('previous')" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </p>
+                                        </li>
+                                        <li class="page-item">
+                                            <a (click)="goToPage('next')" class="page-link" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        </div>
+    </div>
